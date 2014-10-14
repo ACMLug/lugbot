@@ -38,7 +38,7 @@ UNIXServer.open('/tmp/luggy.socket') do |srv|
 
         case cmd.chomp
         when 'quit'
-            return
+            exit
         when 'restart'
             bot.quit
             bthread.kill
