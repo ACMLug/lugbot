@@ -35,7 +35,7 @@ UNIXServer.open('/tmp/luggy.socket') do |srv|
 
     loop do
         cmd = conn.gets
-        exit if cmd.nil?
+        next if cmd.nil?
 
         case cmd.chomp
         when 'quit'
