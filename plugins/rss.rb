@@ -4,7 +4,7 @@ require 'rss'
 class RSSPlugin
     include Cinch::Plugin
 
-    match /([a-z-]+\s+\d+)$/
+    match /seclist\s+([a-z-]+\s+\d+)$/
 
     def execute(m, args)
         args = args.split(/\s+/)
