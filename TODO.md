@@ -5,3 +5,5 @@ Ideas:
 !kernel - to print the latest linux kernel release from kernel.org and link to changelog :)
 !security - list latest vulnerabilities from news feed with link
 Write nagios notifications to channel
+
+
