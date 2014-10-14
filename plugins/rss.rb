@@ -17,7 +17,6 @@ class RSSPlugin
 
         begin
             rss = RSS::Parser.parse("http://seclists.org/rss/#{feed}.rss", true)
-            fail if rss.nil?
             rss.items.to_a[0..num.pred].each { |item| m.reply("#{item.title.gsub(/\s+/, ' ')} (#{item.link})") }
         rescue
             m.reply(Format(:red, "Could not load list #{feed}."))
