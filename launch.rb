@@ -13,7 +13,7 @@ bot = Cinch::Bot.new do
         c.server = 'irc.freenode.net'
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
-        c.plugins.plugins = [RSSPlugin]
+        c.plugins.plugins = [RSSPlugin, KernelPlugin]
     end
 end
 
