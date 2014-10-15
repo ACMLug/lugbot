@@ -7,7 +7,9 @@ Ideas:
 !menu - Print a list of available options
 !command <command> <command|ALL> - Run command on host (non-root) and display its output (truncate at 10 lines max.)
 !meeting - Print info for next meeting (source? mailing list)
-!snort <pattern> <1-10> -  Print latest snort rules from ET http://doc.emergingthreats.net/bin/view/Main/2014727 (change date format for day)
-e.g. !snort OSX 5 - to print the 5 latest snort rules for OSX
+!snort <pattern> <1-10> - Print latest snort rules http://doc.emergingthreats.net/bin/view/Main/WebRss
+	e.g. !snort OSX 5 - to print the 5 latest snort rules for OSX
+	Snort *major* version number will change over time though (pull from snort.org maybe or hardcode)
+	Also, another way but not sorted by latest: http://rules.emergingthreats.net/open/snort-2.9.0/emerging-all.rules
 Write nagios notifications to channel
 
