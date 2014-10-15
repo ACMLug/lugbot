@@ -7,8 +7,13 @@ require_all 'plugins'
 
 SOCKET = '/tmp/luggy.socket'
 
-def get_plugins()
-    IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
+def get_plugins
+    begin
+        IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
+    rescue
+        puts 'Error loading plugins!'
+        exit
+    end
 end
 
 bot = Cinch::Bot.new do
@@ -19,12 +24,8 @@ bot = Cinch::Bot.new do
         c.server = 'irc.freenode.net'
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
-        begin
-            c.plugins.plugins = get_plugins()
-        rescue
-            puts 'Error loading plugins!'
-            exit
-        end
+        c.delay_join = 3
+        c.plugins.plugins = get_plugins
         c.password = gets.to_s.chomp
     end
 end
@@ -62,8 +63,8 @@ UNIXServer.open(SOCKET) do |srv|
             bthread.kill
             bthread = Thread.new { bot.start }
         when 'reload'
-            get_plugins().each do |p|
-                load p.instance_methods(false).map { |m| p.instance_method(m).source_location.first }.uniq[0]
+            get_plugins.each do |p|
+                load p.instance_methods(false).map { |m| p.instance_method(m).source_location.first }.uniq.first
             end
         when /^nick (?<nick>.+)$/
             bot.nick = $~[:nick]
