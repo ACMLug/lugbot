@@ -8,3 +8,4 @@ Ideas:
 !command <command> <command|ALL> - Run command on host (non-root) and display its output (truncate at 10 lines max.)
 !meeting - Print info for next meeting (source? mailing list)
 Write nagios notifications to channel
+
