@@ -17,4 +17,5 @@ BSD news - http://www.bsdnewsletter.com/newsfeeds/bsdnewsletter.rdf, http://bsdn
 OS news - http://www.osnews.com/
 OSX new - http://feeds.feedburner.com/osxdaily?format=xml, http://www.macworld.com/about/RSS.html, http://appleinsider.com/,
 Write nagios notifications to channel
+Add proper documentation and possibly install script.
 

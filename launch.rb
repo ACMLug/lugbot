@@ -5,6 +5,8 @@ require 'require_all'
 
 require_all 'plugins'
 
+SOCKET = '/tmp/luggy.socket'
+
 bot = Cinch::Bot.new do
     configure do |c|
         c.nick = 'Luggy'
@@ -35,10 +37,11 @@ Signal.trap('INT') { exit }
 at_exit do
     bot.quit
     bthread.kill
-    File.delete('/tmp/luggy.socket')
 end
 
-UNIXServer.open('/tmp/luggy.socket') do |srv|
+File.delete(SOCKET) if File.exist?(SOCKET)
+
+UNIXServer.open(SOCKET) do |srv|
     conn = srv.accept
 
     loop do
