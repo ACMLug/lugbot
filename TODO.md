@@ -7,5 +7,6 @@ Ideas:
 !menu - Print a list of available options
 !command <command> <command|ALL> - Run command on host (non-root) and display its output (truncate at 10 lines max.)
 !meeting - Print info for next meeting (source? mailing list)
+!snort <1-10> -  Print latest snort rules from ET http://doc.emergingthreats.net/bin/view/Main/2014727 (change date format for day)
 Write nagios notifications to channel
 
