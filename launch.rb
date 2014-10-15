@@ -27,6 +27,7 @@ end
 
 bot.loggers.clear
 
+Thread.abort_on_exception = true
 bthread = Thread.new { bot.start }
 
 Signal.trap('INT') { exit }
