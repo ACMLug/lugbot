@@ -1,5 +1,4 @@
 require 'rss'
-require 'json'
 require 'open-uri'
 
 module RSSReader
