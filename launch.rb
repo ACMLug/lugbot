@@ -14,7 +14,7 @@ bot = Cinch::Bot.new do
         c.password = gets.to_s.chomp
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
-        c.plugins.plugins = [RSSPlugin, KernelPlugin, SecurityPlugin]
+        c.plugins.plugins = [RSSPlugin, KernelPlugin, SecurityPlugin, FortunePlugin]
     end
 end
 
