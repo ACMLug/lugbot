@@ -7,6 +7,10 @@ require_all 'plugins'
 
 SOCKET = '/tmp/luggy.socket'
 
+def get_plugins()
+    IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
+end
+
 bot = Cinch::Bot.new do
     configure do |c|
         c.nick = 'Luggy'
@@ -16,8 +20,7 @@ bot = Cinch::Bot.new do
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
         begin
-            c.plugins.plugins =
-                IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
+            c.plugins.plugins = get_plugins()
         rescue
             puts 'Error loading plugins!'
             exit
@@ -58,6 +61,10 @@ UNIXServer.open(SOCKET) do |srv|
             bot.quit
             bthread.kill
             bthread = Thread.new { bot.start }
+        when 'reload'
+            get_plugins().each do |p|
+                load p.instance_methods(false).map { |m| p.instance_method(m).source_location.first }.uniq[0]
+            end
         when /^nick (?<nick>.+)$/
             bot.nick = $~[:nick]
         when /^join (?<chan>.+)$/
