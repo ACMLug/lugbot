@@ -22,7 +22,8 @@ bot = Cinch::Bot.new do
             SecurityPlugin,
             FortunePlugin,
             MetalPlugin,
-            NewsPlugin
+            NewsPlugin,
+            Dictionary
         ]
     end
 end
