@@ -1,5 +1,4 @@
 require 'rss'
-require 'open-uri'
 
 module RSSReader
     def self.summary(feed)
