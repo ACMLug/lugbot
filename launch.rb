@@ -13,18 +13,16 @@ bot = Cinch::Bot.new do
         c.realname = 'LUG Bot'
         c.user = 'luggy'
         c.server = 'irc.freenode.net'
-        c.password = gets.to_s.chomp
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
-        c.plugins.plugins = [
-            RSSPlugin,
-            KernelPlugin,
-            SecurityPlugin,
-            FortunePlugin,
-            MetalPlugin,
-            NewsPlugin,
-            Dictionary
-        ]
+        begin
+            c.plugins.plugins =
+                IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
+        rescue
+            puts 'Error loading plugins!'
+            exit
+        end
+        c.password = gets.to_s.chomp
     end
 end
 

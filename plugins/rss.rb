@@ -5,12 +5,10 @@ require_relative '../lib/rssreader'
 class RSSPlugin
     include Cinch::Plugin
 
-    match /seclist\s+([a-z-]+\s+\d+)$/
+    match /seclist\s+([a-z-]+)\s+(\d+)$/
 
-    def execute(m, args)
-        args = args.split(/\s+/)
-        feed = args[0]
-        num = args[1].to_i
+    def execute(m, feed, num)
+        num = num.to_i
         if num.zero?
             m.reply(Format(:red, 'You must load at least one article.'))
             return
