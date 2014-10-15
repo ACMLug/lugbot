@@ -9,10 +9,10 @@ class Dictionary
     def execute(m, all, word, context)
         word.strip!
         context.strip!
-        if all == "+" then
-            lookupall(m, word)
-        elsif context != ""
+        if context != "" then
             lookupcontext(m, word, context)
+        elsif all == "+" then
+            lookupall(m, word)
         else
             lookup(m, word)
         end
