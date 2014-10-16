@@ -65,6 +65,7 @@ UNIXServer.open(SOCKET) do |srv|
             get_plugins().each do |p|
                 load p.instance_methods(false).map { |m| p.instance_method(m).source_location.first }.uniq[0]
             end
+            require_all "plugins"
         when /^nick (?<nick>.+)$/
             bot.nick = $~[:nick]
         when /^join (?<chan>.+)$/
