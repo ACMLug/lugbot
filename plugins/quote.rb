@@ -21,13 +21,16 @@ class QuoteGrab
     match /grab\s+(.+)$/
     
     def execute(m, nick)
-        $quotedb.execute("INSERT INTO quotes(nick, quote) VALUES (?, ?)", 
-                         [nick, $messages[nick]])
+        if $messages[nick]
+            $quotedb.execute("INSERT INTO quotes(nick, quote) VALUES (?, ?)", 
+                             [nick, $messages[nick]])
 
-        $quotedb.execute("select max(id) as id from quotes") do |row|
-            m.reply("Quote #{row[0]}: #{nick}: #{$messages[nick]}")
+            $quotedb.execute("select max(id) as id from quotes") do |row|
+                m.reply("Quote #{row[0]}: #{nick}: #{$messages[nick]}")
+            end
+        else
+            m.reply("No quote available for #{nick}")
         end
-
     end
 end
 
