@@ -27,7 +27,9 @@ class SecurityPlugin
                 when (7.0..10)
                     color = :red
                 end
-                output = "#{item['cve_id']}: #{CGI.unescapeHTML(item['summary'])} (#{item['url']})"
+                summary = CGI.unescapeHTML(item['summary'])
+                summary = "#{summary[0..296]}..." if summary.length > 300
+                output = "#{item['cve_id']}: #{summary} (#{item['url']})"
                 m.reply(Format(color, output))
             end
         rescue
