@@ -12,7 +12,7 @@ class MetalPlugin
 
     def initialize(*args)
         super
-        @db = Redis.new(driver: :hiredis)
+        @db = Redis.new(driver: :hiredis) rescue nil
     end
 
     match 'metal', method: :givemetal
@@ -20,28 +20,36 @@ class MetalPlugin
     match /delmetal\s+(.+)$/, method: :delmetal
 
     def givemetal(m)
-        m.reply(@db.srandmember('metal', 1).first)
+        begin
+            m.reply(@db.srandmember('metal', 1).first)
+        rescue
+            m.reply(Format(:red, 'There was an error communicating with the database.'))
+        end
     end
 
     def addmetal(m, arg)
-        unless @db.sismember('metal fans', m.user.nick)
-            m.reply('Sorry, you are not an approved metal fan.')
-            return
-        end
-
         begin
+            unless @db.sismember('metal fans', m.user.nick)
+                m.reply('Sorry, you are not an approved metal fan.')
+                return
+            end
+
             m.reply(@db.sadd('metal', arg) ? 'Rock on, dude.' : 'That song is already in the database.')
-        rescue => e
-            m.reply('Database full :(')
+        rescue
+            m.reply(Format(:red, 'OMGWTFNOES, database error!!!'))
         end
     end
 
     def delmetal(m, arg)
-        unless @db.sismember('metal fans', m.user.nick)
-            m.reply('Sorry, you are not an approved metal fan.')
-            return
-        end
+        begin
+            unless @db.sismember('metal fans', m.user.nick)
+                m.reply('Sorry, you are not an approved metal fan.')
+                return
+            end
 
-        m.reply(@db.srem('metal', arg) ? 'Song removed.' : "That song wasn't in the database.")
+            m.reply(@db.srem('metal', arg) ? 'Song removed.' : "That song wasn't in the database.")
+        rescue
+            m.reply(Format(:red, 'Database error.'))
+        end
     end
 end
