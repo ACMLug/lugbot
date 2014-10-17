@@ -6,7 +6,7 @@ require 'socket'
 SOCKET = '/tmp/luggy.socket'
 
 def load_plugindir
-    Dir['plugins/*'].each { |plugin| load plugin }
+    Dir['plugins/*.rb'].each { |plugin| load plugin }
 end
 
 def get_plugins
