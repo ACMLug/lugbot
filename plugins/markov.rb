@@ -2,6 +2,9 @@ require 'sqlite3'
 require 'cinch'
 
 class Markov
+  #** Watches the channel and says things statistically likely to be said **#
+  #** usage: `!markov [len]` **#
+  #** Generates a phrase with the markov chain with the given length **#
 
   include Cinch::Plugin
 
