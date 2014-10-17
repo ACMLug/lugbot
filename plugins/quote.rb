@@ -18,8 +18,16 @@ end
 class QuoteGrab
     include Cinch::Plugin
     
+    listen_to :message
     match /grab\s+(.+)$/
-    
+
+    def listen(m)
+        if /^!grab/.match(m.message)
+            return
+        end
+        $messages[m.user.nick] = m.message
+    end
+
     def execute(m, nick)
         if $messages[nick]
             $quotedb.execute("INSERT INTO quotes(nick, quote) VALUES (?, ?)", 
@@ -63,18 +71,5 @@ class Quote
                 m.reply("(#{quotes[rnd][0]}) #{nick}: #{quotes[rnd][1]}")
             end
         end
-    end
-end
-
-class QuoteListener
-    include Cinch::Plugin
-    
-    match /(.*)/, :use_prefix => false
-    
-    def execute(m, text)
-        if /^!grab/.match(text)
-            return
-        end
-        $messages[m.user.nick] = text
     end
 end
