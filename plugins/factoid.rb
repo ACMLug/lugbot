@@ -20,7 +20,6 @@ class FactAdd
     match /factadd\s+([a-zA-Z0-9]+)\s+(.+)$/
     
     def execute(m, factname, factoid)
-        m.reply("Adding: #{factname}: #{factoid}")
         begin
             $factdb.execute("INSERT INTO factoids(name, factoid) VALUES (?, ?)", 
                              [factname, factoid])
@@ -64,7 +63,6 @@ class FactDel
         if fact.count == 0
             m.reply("Factoid #{factname} not found.", prefix=true)
         else
-            m.reply("Deleting factoid #{factname}")
             fact = $factdb.execute("delete from factoids
                                 where name = ?", factname)
             m.reply("Deleted factoid #{factname}", prefix=true)
