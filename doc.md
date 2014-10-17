@@ -11,6 +11,11 @@ Adds a metal song to the database
 
 Deletes a metal song from the database 
 
+## HelpPlugin
+usage: `!help` 
+
+Returns a link to the documentation 
+
 ## SecurityPlugin
 usage: `!security <n>` 
 
