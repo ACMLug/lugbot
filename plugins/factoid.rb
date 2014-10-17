@@ -25,7 +25,7 @@ class Factoid
     include Cinch::Plugin
     
     match /factadd\s+([a-zA-Z0-9]+)\s+(.+)$/, :method => :factadd
-    match /([a-zA-Z0-9]+)\s*(.*)?$/, :prefix => ",", :method => :factoid
+    match /^,([a-zA-Z0-9]+)\s*(.*)?$/, :use_prefix => false, :method => :factoid
     match /factdel\s+([a-zA-Z0-9]+)/, :method => :factdel
 
     def factadd(m, factname, factoid)
