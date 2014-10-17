@@ -46,7 +46,7 @@ class Markov
     until phrase.length - PARTS >= minlen && phrase[-1] == ""
       first = phrase.last(PARTS)
 
-      @count.execute! first.join(" ")
+      row = @count.execute! first.join(" ")
       if row.empty?
         return "failed to generate phrase"
       end
