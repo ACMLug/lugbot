@@ -1,7 +1,15 @@
 require 'rss'
 
 module RSSReader
+    def self.getitems(feed)
+        RSS::Parser.parse(feed, true).items
+    end
+
+    def self.format(list)
+        list.map { |item| "#{item.title.gsub(/\s+/, ' ')} (#{item.link})" }
+    end
+
     def self.summary(feed)
-        RSS::Parser.parse(feed, true).items.map { |item| "#{item.title.gsub(/\s+/, ' ')} (#{item.link})" }
+        format(getitems(feed))
     end
 end

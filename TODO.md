@@ -13,9 +13,9 @@ Ideas:
 	Also, another way but not sorted by latest: http://rules.emergingthreats.net/open/snort-2.9.0/emerging-all.rules
 
 Linux new - http://lxer.com/, http://lwn.net/, http://linux-beta.slashdot.org/
-BSD news - http://www.bsdnewsletter.com/newsfeeds/bsdnewsletter.rdf, http://bsdnews.net/, http://bsd-beta.slashdot.org/
+BSD news - http://bsd-beta.slashdot.org/
 OS news - http://www.osnews.com/
-OSX new - http://feeds.feedburner.com/osxdaily?format=xml, http://www.macworld.com/about/RSS.html, http://appleinsider.com/,
+OSX new - http://appleinsider.com/,
 Write nagios notifications to channel
 Add proper documentation and possibly install script.
 
