@@ -9,7 +9,9 @@ class Announce
 
     def execute(m, announcement)
         m.bot.channels.each do |c|
-            c.send(Format(:red, "Announcement: #{announcement}"))
+            if c.ops.include? m.user
+                c.send(Format(:red, "Announcement: #{announcement}"))
+            end
         end
     end
 end
