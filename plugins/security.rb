@@ -4,6 +4,8 @@ require 'open-uri'
 require 'cgi'
 
 class SecurityPlugin
+    #** usage: `!security <n>` **#
+    #** Fetches the latest n entries from CVEDetails **#
     include Cinch::Plugin
 
     match /security\s+(\d+)$/

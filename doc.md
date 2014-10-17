@@ -1,18 +1,41 @@
-## FortunePlugin
-## NewsPlugin
 ## MetalPlugin
-## RSSPlugin
-## QuoteGrab
-usage: `!grab <nick>` 
+`!metal` 
 
-Stores a quote of the last thing said by `<nick>` 
+Prints a random song from the metal database 
 
-## Quote
-usage: `!quote (<integer> | <nick>)` 
+`!addmetal <song>` 
 
-Gets a quote by id, or picks a random quote from `<nick>` 
+Adds a metal song to the database 
+
+`!delmetal <song>` 
+
+Deletes a metal song from the database 
+
+## HelpPlugin
+usage: `!help` 
+
+Returns a link to the documentation 
+
+## SnortPlugin
+usage: `!snort <query> <n>` 
+
+Gets the first n rules from the snort ruleset whose messages contain the query string 
 
 ## SecurityPlugin
+usage: `!security <n>` 
+
+Fetches the latest n entries from CVEDetails 
+
+## FortunePlugin
+usage `!fortune` 
+
+Tells you your fortune 
+
+## NewsPlugin
+usage: `!news [linux|bsd|osx]` 
+
+Fetches the top 10 news items (optional argument restricts to a particular OS) 
+
 ## Dictionary
 usage: `!define[+] <word or phrase> "|" <context>` 
 
@@ -24,7 +47,31 @@ Gets a definition (or multiple definitions) of a `<word or phrase>`
 
 `!define <word or phrase> | <context>` will get a definition containing `<context>` 
 
+## RSSPlugin
+usage: `!seclist <list> <n>` 
+
+Gets the latest n items from the given seclist feed 
+
+## Announce
+usage (PM the bot): `!announce <anything>` 
+
+Makes an announcement in all channels the bot is in, given the announcer is an op in those channels 
+
+## QuoteGrab
+usage: `!grab <nick>` 
+
+Stores a quote of the last thing said by `<nick>` 
+
+## Quote
+usage: `!quote (<integer> | <nick>)` 
+
+Gets a quote by id, or picks a random quote from `<nick>` 
+
 ## KernelPlugin
+usage: `!kernel` 
+
+Displays the latest kernel version and changelog link 
+
 ## FactAdd
 usage: `!factadd <factoid name> <factoid>` 
 
@@ -39,9 +86,4 @@ The bot will recite the factoid by name (if it exists)
 usage: `!factdel <factoid name>` 
 
 Deletes a factoid from the factoid database by name 
-
-## Announce
-usage (PM the bot): `!announce <anything>` 
-
-Makes an announcement in all channels the bot is in, given the announcer is an op in those channels 
 

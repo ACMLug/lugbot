@@ -3,6 +3,8 @@ require 'json'
 require 'open-uri'
 
 class KernelPlugin
+    #** usage: `!kernel` **#
+    #** Displays the latest kernel version and changelog link **#
     include Cinch::Plugin
 
     match 'kernel'
