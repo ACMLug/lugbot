@@ -9,27 +9,35 @@ class Markov
   include Cinch::Plugin
 
   PARTS = 2
-  @db = SQLite3::Database.new "markov.db"
 
-  begin
-    @db.execute <<-SQL
-    CREATE TABLE IF NOT EXISTS markov (
-      id insert PRIMARY KEY,
-      phrase TEXT NOT NULL,
-      next TEXT NOT NULL
-    );
-    SQL
-    @db.execute "CREATE INDEX IF NOT EXISTS idx_markov_phrase ON markov(phrase)"
-  rescue
+  def self.initialize_class
+    @db = SQLite3::Database.new "markov.db"
+
+    begin
+      @db.execute <<-SQL
+        CREATE TABLE IF NOT EXISTS markov (
+          id INTEGER PRIMARY KEY,
+          phrase TEXT NOT NULL,
+          next TEXT NOT NULL
+        );
+      SQL
+      @db.execute "CREATE INDEX IF NOT EXISTS idx_markov_phrase ON markov(phrase)"
+
+      @insert = @db.prepare "INSERT INTO markov (phrase, next) VALUES (?, ?)"
+      @fetch = @db.prepare "SELECT next FROM markov WHERE phrase = ? LIMIT 1 OFFSET ?"
+      @count = @db.prepare "SELECT count(*) FROM markov WHERE phrase = ?"
+    rescue
+      @db = nil
+    end
   end
-
-  @insert = @db.prepare "INSERT INTO markov (phrase, next) VALUES (?, ?)"
-  @fetch = @db.prepare "SELECT next FROM markov WHERE phrase = ? LIMIT 1 OFFSET ?"
-  @count = @db.prepare "SELECT count(*) FROM markov WHERE phrase = ?"
 
   ## CLASS THINGS
 
   def self.insert(phrase)
+    if @db.nil?
+      return
+    end
+
     phrase.strip!
     phrase = [[""]*PARTS, phrase.split(/\s+/), ""].flatten
 
@@ -44,6 +52,10 @@ class Markov
 
   # generate generates a phrase from the markov chain with a minimum of minlen tokens
   def self.generate(minlen=20)
+    if @db.nil?
+      return "database failed to open"
+    end
+
     phrase = [""]*PARTS
 
     until phrase.length - PARTS >= minlen && phrase[-1] == ""
@@ -52,6 +64,10 @@ class Markov
       row = @count.execute! first.join(" ")
       if row.empty?
         return "failed to generate phrase"
+      end
+
+      unless row[0][0] > 0
+        return "nothing in database"
       end
 
       sample = rand(row[0][0])
@@ -73,6 +89,10 @@ class Markov
 
   # parse parses a file by line and adds associations to the markov chain
   def self.parse(file)
+    if @db.nil?
+      return
+    end
+
     begin
       @db.transaction
       @db.execute "DROP INDEX IF EXISTS idx_markov_phrase"
@@ -91,6 +111,10 @@ class Markov
   match /markov(?:\s+([0-9]+))?$/, :method => :respond
 
   def listen(m)
+    if @db.nil?
+      return
+    end
+
     if m.user == @bot.nick
       return
     end
@@ -100,7 +124,9 @@ class Markov
 
   def respond(m, len)
     str = ""
-    if len.nil? || len.empty?
+    if @db.nil?
+      str = "error: could not connect to database"
+    elsif len.nil? || len.empty?
       str = self.generate
     else
       str = self.generate len.to_i
@@ -108,6 +134,8 @@ class Markov
 
     m.reply "#{m.user}: #{str}"
   end
+
+  initialize_class
 
 end
 
