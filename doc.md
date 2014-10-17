@@ -11,11 +11,6 @@ Adds a metal song to the database
 
 Deletes a metal song from the database 
 
-## Quote
-usage: `!quote (<integer> | <nick>)` 
-
-Gets a quote by id, or picks a random quote from `<nick>` 
-
 ## SecurityPlugin
 usage: `!security <n>` 
 
@@ -47,16 +42,6 @@ usage: `!seclist <list> <n>`
 
 Gets the latest n items from the given seclist feed 
 
-## Factoid
-usage: `,<factoid name>` 
-
-The bot will recite the factoid by name (if it exists) 
-
-## FactDel
-usage: `!factdel <factoid name>` 
-
-Deletes a factoid from the factoid database by name 
-
 ## Announce
 usage (PM the bot): `!announce <anything>` 
 
@@ -67,6 +52,11 @@ usage: `!grab <nick>`
 
 Stores a quote of the last thing said by `<nick>` 
 
+## Quote
+usage: `!quote (<integer> | <nick>)` 
+
+Gets a quote by id, or picks a random quote from `<nick>` 
+
 ## KernelPlugin
 usage: `!kernel` 
 
@@ -76,4 +66,14 @@ Displays the latest kernel version and changelog link
 usage: `!factadd <factoid name> <factoid>` 
 
 Saves a factoid by name for later recall 
+
+## Factoid
+usage: `,<factoid name>` 
+
+The bot will recite the factoid by name (if it exists) 
+
+## FactDel
+usage: `!factdel <factoid name>` 
+
+Deletes a factoid from the factoid database by name 
 
