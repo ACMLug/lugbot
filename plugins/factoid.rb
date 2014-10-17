@@ -14,14 +14,21 @@ begin
 rescue
 end
 
-class FactAdd
+class Factoid
+    #** Create, recall and delete factoids **#
     #** usage: `!factadd <factoid name> <factoid>` **#
     #** Saves a factoid by name for later recall **#
+    #** usage: `,<factoid name>` **#
+    #** The bot will recite the factoid by name (if it exists) **#
+    #** usage: `!factdel <factoid name>` **#
+    #** Deletes a factoid from the factoid database by name **#
     include Cinch::Plugin
     
-    match /factadd\s+([a-zA-Z0-9]+)\s+(.+)$/
-    
-    def execute(m, factname, factoid)
+    match /factadd\s+([a-zA-Z0-9]+)\s+(.+)$/, :method => :factadd
+    match /,([a-zA-Z0-9]+)\s*(.*)?$/, :use_prefix => false, :method => :factoid
+    match /factdel\s+([a-zA-Z0-9]+)/, :method => :factdel
+
+    def factadd(m, factname, factoid)
         begin
             $factdb.execute("INSERT INTO factoids(name, factoid) VALUES (?, ?)", 
                              [factname, factoid])
@@ -30,17 +37,8 @@ class FactAdd
             m.reply("Couldn't add factoid #{factname}. Make sure a fact with that name doesn't already exist.", prefix=true)
         end
     end
-end
-
-class Factoid
-    #** usage: `,<factoid name>` **#
-    #** The bot will recite the factoid by name (if it exists) **#
-
-    include Cinch::Plugin
-
-    match /,([a-zA-Z0-9]+)\s*(.*)?$/, :use_prefix => false
-
-    def execute(m, factname, nick)
+    
+    def factoid(m, factname, nick)
         fact = $factdb.execute("select factoid from factoids 
                               where name = ?", factname)
         if fact.count == 0
@@ -55,16 +53,8 @@ class Factoid
             end
         end
     end
-end
 
-class FactDel
-    #** usage: `!factdel <factoid name>` **#
-    #** Deletes a factoid from the factoid database by name **#
-    include Cinch::Plugin
-
-    match /factdel\s+([a-zA-Z0-9]+)/
-
-    def execute(m, factname)
+    def factdel(m, factname)
         fact = $factdb.execute("select factoid from factoids 
                               where name = ?", factname)
         if fact.count == 0
@@ -75,4 +65,5 @@ class FactDel
             m.reply("Deleted factoid #{factname}", prefix=true)
         end
     end
+    
 end

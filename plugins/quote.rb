@@ -15,13 +15,18 @@ begin
 rescue
 end
 
-class QuoteGrab
+class Quote
+    #** Grab and recall quotes by people in the channel **#
     #** usage: `!grab <nick>` **#
     #** Stores a quote of the last thing said by `<nick>` **#
+    #** usage: `!quote (<integer> | <nick>)` **#
+    #** Gets a quote by id, or picks a random quote from `<nick>` **#
+
     include Cinch::Plugin
     
     listen_to :message
-    match /grab\s+(.+)$/
+    match /grab\s+(.+)$/, :method => :grab
+    match /quote\s+([0-9]*)(.*)$/, :method => :quote
 
     def listen(m)
         if /^!grab/.match(m.message)
@@ -30,7 +35,7 @@ class QuoteGrab
         $messages[m.user.nick] = m.message
     end
 
-    def execute(m, nick)
+    def grab(m, nick)
         if $messages[nick]
             $quotedb.execute("INSERT INTO quotes(nick, quote) VALUES (?, ?)", 
                              [nick, $messages[nick]])
@@ -42,17 +47,8 @@ class QuoteGrab
             m.reply("No quote available for #{nick}")
         end
     end
-end
 
-class Quote
-    #** usage: `!quote (<integer> | <nick>)` **#
-    #** Gets a quote by id, or picks a random quote from `<nick>` **#
-
-    include Cinch::Plugin
-
-    match /quote\s+([0-9]*)(.*)$/
-
-    def execute(m, quoteid, nick)
+    def quote(m, quoteid, nick)
         
         if quoteid != ""
            
