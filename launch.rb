@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 
 require 'socket'
-require 'require_all'
-
-require_all 'plugins'
 
 SOCKET = '/tmp/luggy.socket'
+
+def load_plugindir
+    Dir['plugins/*'].each { |plugin| load plugin }
+end
 
 def get_plugins
     begin
@@ -25,6 +26,7 @@ bot = Cinch::Bot.new do
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
         c.delay_join = 3
+        load_plugindir
         c.plugins.plugins = get_plugins
         c.password = gets.to_s.chomp
     end
@@ -63,10 +65,9 @@ UNIXServer.open(SOCKET) do |srv|
             bthread.kill
             bthread = Thread.new { bot.start }
         when 'reload'
-            get_plugins.each do |p|
-                load p.instance_methods(false).map { |m| p.instance_method(m).source_location.first }.uniq.first
-            end
-            require_all "plugins"
+            load_plugindir
+            bot.plugins.unregister_all
+            bot.plugins.register_plugins(get_plugins)
         when /^nick (?<nick>.+)$/
             bot.nick = $~[:nick]
         when /^join (?<chan>.+)$/
