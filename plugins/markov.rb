@@ -9,23 +9,28 @@ class Markov
   include Cinch::Plugin
 
   PARTS = 2
-  @db = SQLite3::Database.new "markov.db"
 
-  begin
-    @db.execute <<-SQL
-    CREATE TABLE IF NOT EXISTS markov (
-      id insert PRIMARY KEY,
-      phrase TEXT NOT NULL,
-      next TEXT NOT NULL
-    );
-    SQL
-    @db.execute "CREATE INDEX IF NOT EXISTS idx_markov_phrase ON markov(phrase)"
-  rescue
+  def self.initialize_class
+    @db = SQLite3::Database.new "markov.db"
+
+    begin
+      puts "bang"
+      @db.execute <<-SQL
+        CREATE TABLE IF NOT EXISTS markov (
+          id INTEGER PRIMARY KEY,
+          phrase TEXT NOT NULL,
+          next TEXT NOT NULL
+        );
+      SQL
+      @db.execute "CREATE INDEX IF NOT EXISTS idx_markov_phrase ON markov(phrase)"
+    rescue
+      #puts "printer on fire"
+    end
+
+    @insert = @db.prepare "INSERT INTO markov (phrase, next) VALUES (?, ?)"
+    @fetch = @db.prepare "SELECT next FROM markov WHERE phrase = ? LIMIT 1 OFFSET ?"
+    @count = @db.prepare "SELECT count(*) FROM markov WHERE phrase = ?"
   end
-
-  @insert = @db.prepare "INSERT INTO markov (phrase, next) VALUES (?, ?)"
-  @fetch = @db.prepare "SELECT next FROM markov WHERE phrase = ? LIMIT 1 OFFSET ?"
-  @count = @db.prepare "SELECT count(*) FROM markov WHERE phrase = ?"
 
   ## CLASS THINGS
 
@@ -108,6 +113,8 @@ class Markov
 
     m.reply "#{m.user}: #{str}"
   end
+
+  initialize_class
 
 end
 
