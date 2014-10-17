@@ -7,6 +7,11 @@ usage: `!grab <nick>`
 
 Stores a quote of the last thing said by `<nick>` 
 
+## Quote
+usage: `!quote (<integer> | <nick>)` 
+
+Gets a quote by id, or picks a random quote from `<nick>` 
+
 ## SecurityPlugin
 ## Dictionary
 usage: `!define[+] <word or phrase> "|" <context>` 
@@ -24,6 +29,16 @@ Gets a definition (or multiple definitions) of a `<word or phrase>`
 usage: `!factadd <factoid name> <factoid>` 
 
 Saves a factoid by name for later recall 
+
+## Factoid
+usage: `,<factoid name>` 
+
+The bot will recite the factoid by name (if it exists) 
+
+## FactDel
+usage: `!factdel <factoid name>` 
+
+Deletes a factoid from the factoid database by name 
 
 ## Announce
 usage (PM the bot): `!announce <anything>` 
