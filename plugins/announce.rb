@@ -2,6 +2,8 @@ require 'cinch'
 
 
 class Announce
+    #** usage (PM the bot): `!announce <anything>` **#
+    #** Makes an announcement in all channels the bot is in, given the announcer is an op in those channels **#
     include Cinch::Plugin
 
     set :react_on, :private
