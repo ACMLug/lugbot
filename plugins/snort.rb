@@ -20,7 +20,7 @@ class SnortPlugin
         begin
             matches = URI(RULESET).read.scan(/alert.+?rev:\d+;\)/)
             rules = []
-            matches.map { |text| text.match(/msg:"(.+?)(?<!\\)"/)[1] }.each_with_index do |str, i|
+            matches.map { |text| text.match(/msg:"(.+?)(?<!\\)"/).to_a[1] }.compact.each_with_index do |str, i|
                 rules << matches[i] if str.downcase.include?(query.strip.downcase)
             end
             
