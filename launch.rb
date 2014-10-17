@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'cinch'
 require 'socket'
 
 SOCKET = '/tmp/luggy.socket'
