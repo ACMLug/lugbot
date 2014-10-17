@@ -25,7 +25,7 @@ def comment()
 end
 
 def comments()
-    while $tokens[0] != "#**"
+    while $tokens[0] != "#**" and $tokens[0] != "class"
         get_next
     end
     while $tokens[0] == "#**"
@@ -35,9 +35,14 @@ def comments()
 end
 
 def do_class()
-    match "class"
-    puts "## #{get_next}"
-    comments
+    while $tokens[0] == "class"
+        match "class"
+        puts "## #{get_next}"
+        comments
+        while $tokens[0] != "class"
+            get_next
+        end
+    end
 end
 
 files = Dir["plugins/*"]
@@ -48,6 +53,7 @@ files.each do |f|
         #puts "Generating #{f}"
         
         text = File.read(f)
+#text = File.read("plugins/factoid.rb")
         
         $tokens = text.split(" ")
         

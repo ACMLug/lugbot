@@ -11,6 +11,11 @@ Adds a metal song to the database
 
 Deletes a metal song from the database 
 
+## Quote
+usage: `!quote (<integer> | <nick>)` 
+
+Gets a quote by id, or picks a random quote from `<nick>` 
+
 ## SecurityPlugin
 usage: `!security <n>` 
 
@@ -41,6 +46,16 @@ Gets a definition (or multiple definitions) of a `<word or phrase>`
 usage: `!seclist <list> <n>` 
 
 Gets the latest n items from the given seclist feed 
+
+## Factoid
+usage: `,<factoid name>` 
+
+The bot will recite the factoid by name (if it exists) 
+
+## FactDel
+usage: `!factdel <factoid name>` 
+
+Deletes a factoid from the factoid database by name 
 
 ## Announce
 usage (PM the bot): `!announce <anything>` 
