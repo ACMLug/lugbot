@@ -3,6 +3,8 @@ require 'cinch'
 require_relative '../lib/rssreader'
 
 class NewsPlugin
+    #** usage: `!news [linux|bsd|osx]` **#
+    #** Fetches the top 10 news items (optional argument restricts to a particular OS) **#
     include Cinch::Plugin
 
     LINUX_NEWS = ['http://feeds.feedburner.com/linuxjournalcom?format=xml']

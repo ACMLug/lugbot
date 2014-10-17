@@ -2,6 +2,12 @@ require 'cinch'
 require 'redis'
 
 class MetalPlugin
+    #** `!metal` **#
+    #** Prints a random song from the metal database **#
+    #** `!addmetal <song>` **#
+    #** Adds a metal song to the database **#
+    #** `!delmetal <song>` **#
+    #** Deletes a metal song from the database **#
     include Cinch::Plugin
 
     def initialize(*args)

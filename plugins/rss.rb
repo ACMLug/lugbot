@@ -3,6 +3,8 @@ require 'cinch'
 require_relative '../lib/rssreader'
 
 class RSSPlugin
+    #** usage: `!seclist <list> <n>` **#
+    #** Gets the latest n items from the given seclist feed **#
     include Cinch::Plugin
 
     match /seclist\s+([a-z-]+)\s+(\d+)$/
