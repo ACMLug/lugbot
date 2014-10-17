@@ -23,7 +23,7 @@ class Quote
     #** Gets a quote by id, or picks a random quote from `<nick>` **#
 
     include Cinch::Plugin
-    
+
     listen_to :message
     match /grab\s+(.+)$/, :method => :grab
     match /quote\s+([0-9]*)(.*)$/, :method => :quote
@@ -37,7 +37,7 @@ class Quote
 
     def grab(m, nick)
         if $messages[nick]
-            $quotedb.execute("INSERT INTO quotes(nick, quote) VALUES (?, ?)", 
+            $quotedb.execute("INSERT INTO quotes(nick, quote) VALUES (?, ?)",
                              [nick, $messages[nick]])
 
             $quotedb.execute("select max(id) as id from quotes") do |row|
@@ -49,10 +49,10 @@ class Quote
     end
 
     def quote(m, quoteid, nick)
-        
+
         if quoteid != ""
-           
-            quotes = $quotedb.execute("select nick, quote from quotes 
+
+            quotes = $quotedb.execute("select nick, quote from quotes
                               where id = ?", quoteid)
             if quotes.count == 0
                 m.reply("Quote #{quoteid} not found.")
@@ -62,14 +62,14 @@ class Quote
                 end
             end
         else
-            quotes = $quotedb.execute("select id, quote from quotes 
+            quotes = $quotedb.execute("select id, nick, quote from quotes
                                        where nick like ?", nick)
 
             if quotes.count == 0
                 m.reply("No quotes found for #{nick}")
             else
                 rnd = rand(quotes.count)
-                m.reply("(#{quotes[rnd][0]}) #{nick}: #{quotes[rnd][1]}")
+                m.reply("(#{quotes[rnd][0]}) #{quotes[rnd][1]}: #{quotes[rnd][2]}")
             end
         end
     end
