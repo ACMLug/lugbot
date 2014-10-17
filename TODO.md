@@ -7,12 +7,8 @@ Ideas:
 !menu - Print a list of available options
 !command <command> <command|ALL> - Run command on host (non-root) and display its output (truncate at 10 lines max.)
 !meeting - Print info for next meeting (source? mailing list)
-!snort <pattern> <1-10> - Print latest snort rules http://doc.emergingthreats.net/bin/view/Main/WebRss
-	e.g. !snort OSX 5 - to print the 5 latest snort rules for OSX
-	Snort *major* version number will change over time though (pull from snort.org maybe or hardcode)
-	Also, another way but not sorted by latest: http://rules.emergingthreats.net/open/snort-2.9.0/emerging-all.rules
 
-Linux new - http://lxer.com/, http://lwn.net/, http://linux-beta.slashdot.org/
+Linux news - http://lxer.com/, http://lwn.net/, http://linux-beta.slashdot.org/
 BSD news - http://bsdnews.net/, http://bsd-beta.slashdot.org/
 OS news - http://www.osnews.com/
 OSX new - http://appleinsider.com/,

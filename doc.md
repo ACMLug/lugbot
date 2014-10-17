@@ -16,6 +16,11 @@ usage: `!help`
 
 Returns a link to the documentation 
 
+## SnortPlugin
+usage: `!snort <query> <n>` 
+
+Gets the first n rules from the snort ruleset whose messages contain the query string 
+
 ## SecurityPlugin
 usage: `!security <n>` 
 
