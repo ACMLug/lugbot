@@ -13,7 +13,7 @@ Ideas:
 	Also, another way but not sorted by latest: http://rules.emergingthreats.net/open/snort-2.9.0/emerging-all.rules
 
 Linux new - http://lxer.com/, http://lwn.net/, http://linux-beta.slashdot.org/
-BSD news - http://bsd-beta.slashdot.org/
+BSD news - http://bsdnews.net/, http://bsd-beta.slashdot.org/
 OS news - http://www.osnews.com/
 OSX new - http://appleinsider.com/,
 Write nagios notifications to channel
