@@ -15,6 +15,8 @@ rescue
 end
 
 class FactAdd
+    #** usage: `!factadd <factoid name> <factoid>` **#
+    #** Saves a factoid by name for later recall **#
     include Cinch::Plugin
     
     match /factadd\s+([a-zA-Z0-9]+)\s+(.+)$/
@@ -31,6 +33,9 @@ class FactAdd
 end
 
 class Factoid
+    #** usage: `,<factoid name>` **#
+    #** The bot will recite the factoid by name (if it exists) **#
+
     include Cinch::Plugin
 
     match /,([a-zA-Z0-9]+)\s*(.*)?$/, :use_prefix => false
@@ -53,6 +58,8 @@ class Factoid
 end
 
 class FactDel
+    #** usage: `!factdel <factoid name>` **#
+    #** Deletes a factoid from the factoid database by name **#
     include Cinch::Plugin
 
     match /factdel\s+([a-zA-Z0-9]+)/

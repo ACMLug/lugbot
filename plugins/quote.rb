@@ -16,6 +16,8 @@ rescue
 end
 
 class QuoteGrab
+    #** usage: `!grab <nick>` **#
+    #** Stores a quote of the last thing said by `<nick>` **#
     include Cinch::Plugin
     
     listen_to :message
@@ -43,6 +45,9 @@ class QuoteGrab
 end
 
 class Quote
+    #** usage: `!quote (<integer> | <nick>)` **#
+    #** Gets a quote by id, or picks a random quote from `<nick>` **#
+
     include Cinch::Plugin
 
     match /quote\s+([0-9]*)(.*)$/
