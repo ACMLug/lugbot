@@ -38,7 +38,7 @@ Signal.trap('INT') { exit }
 
 at_exit { bot.quit }
 
-if %x[git branch].include?('master')
+if %x[git rev-parse --abbrev-ref HEAD] == 'master'
     begin
         bot.start
     rescue
