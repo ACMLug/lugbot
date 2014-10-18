@@ -65,4 +65,36 @@ Signal.trap('INT') { exit }
 
 at_exit { bot.quit }
 
-bot.start
+Thread.new { bot.start }
+
+File.delete(SOCKET) if File.exist?(SOCKET)
+
+UNIXServer.open(SOCKET) do |srv|
+    conn = srv.accept
+
+    loop do
+        cmd = conn.gets
+        if cmd.nil?
+            conn.close
+            conn = srv.accept
+            next
+        end
+
+        case cmd.chomp
+        when 'quit'
+            exit
+        when 'restart'
+            bot.quit
+            sleep 3
+            Thread.new { bot.start }
+        when 'reload'
+            PluginHelpers.reload_plugins(bot)
+        when /^nick (?<nick>.+)$/
+            bot.nick = $~[:nick]
+        when /^join (?<chan>.+)$/
+            bot.join($~[:chan])
+        when /^part (?<chan>.+)$/
+            bot.part($~[:chan])
+        end
+    end
+end
