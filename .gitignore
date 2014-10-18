@@ -1,4 +1,6 @@
 auth.json
 redis.conf
+redis-server
 *.db
+*.rdb
 *.swp

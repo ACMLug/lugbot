@@ -7,18 +7,39 @@ require 'json'
 
 SOCKET = '/tmp/luggy.socket'
 
-def get_plugins
-    Dir['plugins/*.rb'].each { |plugin| load plugin }
-    IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
+module PluginHelpers
+    def self.get_plugins
+        Dir['plugins/*.rb'].each { |plugin| load plugin }
+        IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
+    end
+
+    def self.reload_plugins(bot)
+        bot.plugins.unregister_all
+        bot.plugins.register_plugins(get_plugins)
+    end
 end
 
-def reload_plugins(bot)
-    bot.unregister_all
-    bot.register_plugins(get_plugins)
-    bot.start
-end
+class StupidLogger < Cinch::Logger
+    def initialize(bot)
+        @bot = bot
+    end
 
-system('redis') unless File.exist?('/var/run/redis.pid')
+    def exception(e)
+        if %x[git rev-parse --abbrev-ref HEAD].chomp == 'master'
+            @bot.channels.each do |c|
+                c.send(Cinch::Formatting.format(:red, 'Encountered exception. Switching to stable...'))
+            end
+            system('git checkout stable')
+            PluginHelpers.reload_plugins(@bot)
+        else
+            @bot.channels.each do |c|
+                c.send(Cinch::Formatting.format(:red, 'Error on stable.'))
+            end
+        end
+    end
+
+    def log(messages, event = nil, level = nil); end
+end
 
 bot = Cinch::Bot.new do
     configure do |c|
@@ -29,23 +50,19 @@ bot = Cinch::Bot.new do
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
         c.delay_join = 3
-        c.plugins.plugins = get_plugins
+        c.plugins.plugins = PluginHelpers.get_plugins
         c.password = JSON.parse(File.read('auth.json'))['password']
     end
 end
+
+system('./redis-server redis.conf') unless File.exist?('/var/run/redis.pid')
+
+bot.loggers.replace([StupidLogger.new(bot)])
+
+Thread.abort_on_exception = true
 
 Signal.trap('INT') { exit }
 
 at_exit { bot.quit }
 
-if %x[git rev-parse --abbrev-ref HEAD] == 'master'
-    begin
-        bot.start
-    rescue
-        bot.channels.each do |c|
-            c.send(Format(:red, 'Encountered exception. Switching to stable...'))
-        end
-        #system('git checkout stable')
-        reload_plugins(bot)
-    end
-end
+bot.start
