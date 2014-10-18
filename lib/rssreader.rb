@@ -1,3 +1,4 @@
+require 'cinch'
 require 'rss'
 
 module RSSReader
@@ -6,7 +7,7 @@ module RSSReader
     end
 
     def self.format(list)
-        list.map { |item| "#{item.title.gsub(/\s+/, ' ')} (#{item.link})" }
+        list.map { |item| "#{Cinch::Formatting.format(:orange, item.title.gsub(/\s+/, ' '))} (#{item.link})" }
     end
 
     def self.summary(feed)

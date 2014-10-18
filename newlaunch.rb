@@ -9,7 +9,7 @@ SOCKET = '/tmp/luggy.socket'
 
 module PluginHelpers
     def self.get_plugins
-        Dir['plugins/*.rb'].each { |plugin| load plugin }
+        Dir['plugins/*.rb', 'lib/*.rb'].each { |file| load file }
         IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
     end
 
