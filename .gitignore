@@ -1,2 +1,3 @@
 auth.json
-lugbot.db
+redis.conf
+*.db
