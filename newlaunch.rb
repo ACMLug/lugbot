@@ -85,7 +85,6 @@ UNIXServer.open(SOCKET) do |srv|
             exit
         when 'restart'
             bot.quit
-            sleep 3
             Thread.new { bot.start }
         when 'reload'
             PluginHelpers.reload_plugins(bot)
