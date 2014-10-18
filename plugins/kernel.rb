@@ -15,7 +15,7 @@ class KernelPlugin
             m.reply("Latest kernel version: #{kerneldata['latest_stable']['version']}.")
             releases = kerneldata['releases']
             index = releases.find_index { |release| !release['changelog'].nil? }
-            m.reply("Version #{releases[index]['version']} changelog: #{releases[index]['changelog']}.")
+            m.reply("Version #{releases[index]['version']} changelog: #{releases[index]['changelog']}")
         rescue
             m.reply(Format(:red, 'There was an error fetching the data!'))
         end
