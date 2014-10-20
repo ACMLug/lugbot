@@ -112,7 +112,7 @@ class Markov
   ## BOT THINGS
 
   listen_to :message
-  match /markov(?:\s+([0-9]+))?$/, :method => :respond
+  match %r{markov(?:\s+([0-9]+))?$}, method: :respond
 
   def listen(m)
     if /^!markov/.match m.message
@@ -123,7 +123,7 @@ class Markov
       return
     end
 
-    if m.user == @bot.nick
+    if m.user.user == @bot.nick
       return
     end
 
