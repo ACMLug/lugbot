@@ -1,5 +1,5 @@
 require 'cinch'
-require 'yaml/store'
+require 'yaml'
 
 class MeetingPlugin
     include Cinch::Plugin
@@ -8,7 +8,11 @@ class MeetingPlugin
 
     def execute(m)
         begin
-            m.reply("#{m.user.nick}: #{YAML.load(File.read('notes.yml'))['Meeting Info']}") # notes.yml is updated frequently by a cron job
+            info = YAML.load(File.read('notes.yml')) # notes.yml is updated frequently by a cron job (the GitHub URL is added to the local copy only)
+            m.reply("#{m.user.nick}: Here is some info about our next meeting:")
+            m.reply("It will be at #{info['Meeting Info']}.")
+            m.reply("This week's big talk is about #{info['Talks']['Big Talks'].keys.first}.")
+            m.reply("For more info, go to #{info['Link']}.")
         rescue
             m.reply(Format(:red, 'Could not read latest meeting notes.'))
         end
