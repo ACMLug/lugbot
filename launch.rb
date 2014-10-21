@@ -3,19 +3,19 @@
 require 'bundler/setup'
 require 'cinch'
 require 'socket'
+require 'json'
 
 SOCKET = '/tmp/luggy.socket'
 
-def load_plugindir
-    Dir['plugins/*.rb'].each { |plugin| load plugin }
-end
-
-def get_plugins
-    begin
+module PluginHelpers
+    def self.get_plugins
+        Dir['plugins/*.rb', 'lib/*.rb'].each { |file| load file }
         IO.readlines('plist').map(&:strip).reject(&:empty?).map { |line| Object.const_get(line) }
-    rescue
-        puts 'Error loading plugins!'
-        exit
+    end
+
+    def self.reload_plugins(bot)
+        bot.plugins.unregister_all
+        bot.plugins.register_plugins(get_plugins)
     end
 end
 
@@ -28,23 +28,22 @@ bot = Cinch::Bot.new do
         c.messages_per_second = 1
         c.channels = %w[##uiuclug ##opennsm]
         c.delay_join = 3
-        load_plugindir
-        c.plugins.plugins = get_plugins
-        c.password = gets.to_s.chomp
+        c.plugins.plugins = PluginHelpers.get_plugins
+        c.password = JSON.parse(File.read('auth.json'))['password']
     end
 end
 
-bot.loggers.clear
+system('./redis-server redis.conf') unless File.exist?('/var/run/redis.pid')
+
+bot.loggers.replace([StupidLogger.new(bot)])
 
 Thread.abort_on_exception = true
-bthread = Thread.new { bot.start }
 
 Signal.trap('INT') { exit }
 
-at_exit do
-    bot.quit
-    bthread.kill
-end
+at_exit { bot.quit }
+
+Thread.new { bot.start }
 
 File.delete(SOCKET) if File.exist?(SOCKET)
 
@@ -64,12 +63,9 @@ UNIXServer.open(SOCKET) do |srv|
             exit
         when 'restart'
             bot.quit
-            bthread.kill
-            bthread = Thread.new { bot.start }
+            Thread.new { bot.start }
         when 'reload'
-            load_plugindir
-            bot.plugins.unregister_all
-            bot.plugins.register_plugins(get_plugins)
+            PluginHelpers.reload_plugins(bot)
         when /^nick (?<nick>.+)$/
             bot.nick = $~[:nick]
         when /^join (?<chan>.+)$/
