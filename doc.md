@@ -95,3 +95,8 @@ usage: `!snort <query> <n>`
 
 Gets the first n rules from the snort ruleset whose messages contain the query string 
 
+## LuckDragon
+
+usage: `!luckdragon`
+
+Prints a picture of an asciiart luckdragon to the screen
