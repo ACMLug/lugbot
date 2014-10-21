@@ -1,17 +1,14 @@
 require 'cinch'
-require 'json'
-require 'open-uri'
 
 class LuckDragon
     #** usage: `!luckdragon` **#
-    #** Displays the latest kernel version and changelog link **#
+    #** Prints a picture of an asciiart luckdragon to the screen **#
     include Cinch::Plugin
 
     match 'luckdragon'
 
     def execute(m)
-        begin
-            m.reply("\n
+        m.reply("\n
     _mmmmmm__ mmmmmmm           mmmmmmmmmmm            
    T  _  |  ||       \_        /           b           
   /  (O) |  ||         \    __/    MMMMM   m        PL 
@@ -23,6 +20,5 @@ class LuckDragon
                  P  M                M  M              
                   MM                  MM'              ")
  
-        end
     end
 end

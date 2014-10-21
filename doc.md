@@ -1,7 +1,54 @@
-## Announce
-usage (PM the bot): `!announce <anything>` 
+## MetalPlugin
+`!metal` 
 
-Makes an announcement in all channels the bot is in, given the announcer is an op in those channels 
+Prints a random song from the metal database 
+
+`!addmetal <song>` 
+
+Adds a metal song to the database 
+
+`!delmetal <song>` 
+
+Deletes a metal song from the database 
+
+## HelpPlugin
+usage: `!help` 
+
+Returns a link to the documentation 
+
+## MeetingPlugin
+## Markov
+Watches the channel and says things statistically likely to be said 
+
+usage: `!markov [len]` 
+
+Generates a phrase with the markov chain with the given length 
+
+## <<
+## SnortPlugin
+usage: `!snort <query> <n>` 
+
+Gets the first n rules from the snort ruleset whose messages contain the query string 
+
+## LuckDragon
+usage: `!luckdragon` 
+
+Prints a picture of an asciiart luckdragon to the screen 
+
+## SecurityPlugin
+usage: `!security <n>` 
+
+Fetches the latest n entries from CVEDetails 
+
+## FortunePlugin
+usage `!fortune` 
+
+Tells you your fortune 
+
+## NewsPlugin
+usage: `!news [linux|bsd|osx]` 
+
+Fetches the top 10 news items (optional argument restricts to a particular OS) 
 
 ## Dictionary
 usage: `!define[+] <word or phrase> "|" <context>` 
@@ -13,6 +60,32 @@ Gets a definition (or multiple definitions) of a `<word or phrase>`
 `!define+ <word or phrase>` will get all definitions. 
 
 `!define <word or phrase> | <context>` will get a definition containing `<context>` 
+
+## RSSPlugin
+usage: `!seclist <list> <n>` 
+
+Gets the latest n items from the given seclist feed 
+
+## Announce
+usage (PM the bot): `!announce <anything>` 
+
+Makes an announcement in all channels the bot is in, given the announcer is an op in those channels 
+
+## Quote
+Grab and recall quotes by people in the channel 
+
+usage: `!grab <nick>` 
+
+Stores a quote of the last thing said by `<nick>` 
+
+usage: `!quote (<integer> | <nick>)` 
+
+Gets a quote by id, or picks a random quote from `<nick>` 
+
+## KernelPlugin
+usage: `!kernel` 
+
+Displays the latest kernel version and changelog link 
 
 ## Factoid
 Create, recall and delete factoids 
@@ -29,74 +102,3 @@ usage: `!factdel <factoid name>`
 
 Deletes a factoid from the factoid database by name 
 
-## FortunePlugin
-usage `!fortune` 
-
-Tells you your fortune 
-
-## HelpPlugin
-usage: `!help` 
-
-Returns a link to the documentation 
-
-## KernelPlugin
-usage: `!kernel` 
-
-Displays the latest kernel version and changelog link 
-
-## Markov
-Watches the channel and says things statistically likely to be said 
-
-usage: `!markov [len]` 
-
-Generates a phrase with the markov chain with the given length 
-
-## MetalPlugin
-`!metal` 
-
-Prints a random song from the metal database 
-
-`!addmetal <song>` 
-
-Adds a metal song to the database 
-
-`!delmetal <song>` 
-
-Deletes a metal song from the database 
-
-## NewsPlugin
-usage: `!news [linux|bsd|osx]` 
-
-Fetches the top 10 news items (optional argument restricts to a particular OS) 
-
-## Quote
-Grab and recall quotes by people in the channel 
-
-usage: `!grab <nick>` 
-
-Stores a quote of the last thing said by `<nick>` 
-
-usage: `!quote (<integer> | <nick>)` 
-
-Gets a quote by id, or picks a random quote from `<nick>` 
-
-## RSSPlugin
-usage: `!seclist <list> <n>` 
-
-Gets the latest n items from the given seclist feed 
-
-## SecurityPlugin
-usage: `!security <n>` 
-
-Fetches the latest n entries from CVEDetails 
-
-## SnortPlugin
-usage: `!snort <query> <n>` 
-
-Gets the first n rules from the snort ruleset whose messages contain the query string 
-
-## LuckDragon
-
-usage: `!luckdragon`
-
-Prints a picture of an asciiart luckdragon to the screen
