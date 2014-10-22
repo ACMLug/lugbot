@@ -50,6 +50,11 @@ usage: `!news [linux|bsd|osx]`
 
 Fetches the top 10 news items (optional argument restricts to a particular OS) 
 
+## UrbanPlugin
+usage: `!urban <phrase> [n]` 
+
+Gives the correct definition(s) of `<phrase>` with examples 
+
 ## Dictionary
 usage: `!define[+] <word or phrase> "|" <context>` 
 
