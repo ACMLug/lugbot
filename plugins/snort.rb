@@ -18,12 +18,12 @@ class SnortPlugin
         end
 
         begin
-            matches = URI(RULESET).read.scan(/alert.+?rev:\d+;\)/)
+            matches = URI(RULESET).read.scan(/(alert|log|pass|activate|dynamic|drop|reject|sdrop).+?rev:\d+;\)/)
             rules = []
             matches.map { |text| text.match(/msg:"(.+?)(?<!\\)"/).to_a[1] }.compact.each_with_index do |str, i|
                 rules << matches[i] if str.downcase.include?(query.strip.downcase)
             end
-            
+
             rules[0..num.pred].each { |rule| m.reply(rule) }
         rescue
             m.reply(Format(:red, 'Error fetching rules.'))
