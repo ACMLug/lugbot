@@ -1,5 +1,5 @@
 require 'cinch'
-require 'open-uri'
+require 'uri'
 
 class SnortPlugin
     #** usage: `!snort <query> <n>` **#

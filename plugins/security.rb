@@ -1,6 +1,6 @@
 require 'cinch'
 require 'json'
-require 'open-uri'
+require 'uri'
 require 'cgi'
 
 class SecurityPlugin

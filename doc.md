@@ -61,6 +61,9 @@ Gets a definition (or multiple definitions) of a `<word or phrase>`
 
 `!define <word or phrase> | <context>` will get a definition containing `<context>` 
 
+## TitlePlugin
+Automatically fetches the titles of URLs posted in chat 
+
 ## RSSPlugin
 usage: `!seclist <list> <n>` 
 
