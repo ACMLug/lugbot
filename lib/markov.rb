@@ -35,6 +35,7 @@ class Markov
 
   # generate generates a phrase from the markov chain with a minimum of minlen tokens
   def generate(minlen=20)
+    minlen = minlen.to_i if minlen.is_a? String
     phrase = [""]*@parts
 
     until phrase.reject(&:empty?).length >= minlen && phrase[-1] == ""
