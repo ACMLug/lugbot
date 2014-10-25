@@ -17,14 +17,17 @@ usage: `!help`
 Returns a link to the documentation 
 
 ## MeetingPlugin
-## Markov
+usage: `!meeting` 
+
+Returns details about the upcoming LUG or OpenNSM meeting 
+
+## MarkovPlugin
 Watches the channel and says things statistically likely to be said 
 
 usage: `!markov [len]` 
 
 Generates a phrase with the markov chain with the given length 
 
-## <<
 ## SnortPlugin
 usage: `!snort <query> <n>` 
 

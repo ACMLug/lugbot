@@ -2,6 +2,8 @@ require 'cinch'
 require 'yaml'
 
 class MeetingPlugin
+    #** usage: `!meeting` **#
+    #** Returns details about the upcoming LUG or OpenNSM meeting **#
     include Cinch::Plugin
 
     match 'meeting'
