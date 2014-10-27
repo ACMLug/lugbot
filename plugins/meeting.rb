@@ -16,7 +16,7 @@ class MeetingPlugin
             m.reply("It will be at #{info['Meeting Info']}.")
             m.reply("This week's big talk is about #{info['Talks']['Big Talks'].keys.first}.")
             urlprefix = "https://github.com/#{m.channel == '##opennsm' ? 'open-nsm' : 'ACMLug'}/meetings/blob/master/"
-            pathsuffix = %x[readlink -f ../#{fname}/current].match(/\/home\/wqh\/#{fname}(.+)$/).captures.first
+            pathsuffix = %x[readlink -f ../#{fname}/current].match(/#{ENV['HOME']}\/#{fname}(.+)$/).captures.first
             m.reply("For more info, go to #{urlprefix}#{pathsuffix}.")
             
         rescue
