@@ -10,12 +10,15 @@ class MeetingPlugin
 
     def execute(m)
         begin
-            info = YAML.load(File.read("#{m.channel == '##opennsm' ? 'nsm' : 'lug'}notes.yml"))
-            # both YAML files are updated frequently by a cron job (the GitHub URL is added to the local copy only)
+            fname = "#{m.channel == '##opennsm' ? 'opennsm-' : ''}meetings/"
+            info = YAML.load(File.read("../#{fname}current"))
             m.reply("#{m.user.nick}: Here is some info about our next meeting:")
             m.reply("It will be at #{info['Meeting Info']}.")
             m.reply("This week's big talk is about #{info['Talks']['Big Talks'].keys.first}.")
-            m.reply("For more info, go to #{info['Link']}.")
+            urlprefix = "https://github.com/#{m.channel == '##opennsm' ? 'open-nsm' : 'ACMLug'}/meetings/blob/master/"
+            pathsuffix = %x[readlink -f ../#{fname}/current].match(/\/home\/wqh\/#{fname}(.+)$/).captures.first
+            m.reply("For more info, go to #{urlprefix}#{pathsuffix}.")
+            
         rescue
             m.reply(Format(:red, 'Could not read latest meeting notes.'))
         end
